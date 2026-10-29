@@ -1,26 +1,15 @@
 import { useState } from "react";
 import { Button } from "./Button";
+
+const OTHERS_LIKES = 12;
+
 export const LikeButton = () => {
-  const [likeState, setLikeState] = useState({ isLiked: false, likeCount: 0 });
+  const [isLiked, setIsLiked] = useState(false);
+  const count = OTHERS_LIKES + (isLiked ? 1 : 0); // derived: can never get out of sync
+
   return (
-    <div>
-      <Button
-        onClick={() =>
-          setLikeState({
-            isLiked: !likeState.isLiked,
-            likeCount: likeState.isLiked ? likeState.isLiked : 0,
-          })
-        }
-      >
-        {likeState.isLiked ? "❤️ Liked" : "🤍 Like"}
-      </Button>
-      <Button
-        onClick={() =>
-          setLikeState({ ...likeState, likeCount: likeState.likeCount + 1 })
-        }
-      >
-        {likeState.likeCount} liked
-      </Button>
-    </div>
+    <Button onClick={() => setIsLiked((liked) => !liked)}>
+      {isLiked ? "❤️ Liked" : "🤍 Like"} · {count}
+    </Button>
   );
 };
